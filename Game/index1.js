@@ -7,6 +7,7 @@ canvas.height=innerHeight;
 canvas.style.backgroundColor="pink";
 const gravity=0.5;
 let scoreOffsetx=0;
+
 var offset=0;
 const backImage=new Image();
 backImage.src='./images/background.png'
