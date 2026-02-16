@@ -23,6 +23,7 @@ class circle{
 
         // Render moving circle with a distinct color so it's easy to identify
         if(this.collided){
+
             // After collision: red
             context.fillStyle = 'rgba(255,0,0,0.6)';
             context.lineWidth = 2;
