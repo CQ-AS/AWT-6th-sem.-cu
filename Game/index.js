@@ -7,6 +7,18 @@ canvas.height=innerHeight;
 canvas.style.backgroundColor="pink";
 const gravity=0.5;
 let scoreOffsetx=0;
+let offset=0;
+const background=new Image();
+background.src="./images/background.png";
+
+const backgroundHills= new Image();
+backgroundHills.src="./images/hills.png";
+
+const platformImage=new Image();
+platformImage.src="./images/platform.png";
+
+const platformSmallTall=new Image();
+platformSmallTall.src="./images/platformSmallTall.png"
 
 const key={
     right:{
@@ -14,6 +26,18 @@ const key={
     },
     left:{
         pressed:false
+    }
+}
+
+class Background{
+    constructor(){
+        this.position={
+            x:0,
+            y:0
+        }
+    }
+    update(){
+        context.drawImage(backgroundHills,this.position.x+offset,this.position.y);
     }
 }
 
@@ -54,18 +78,20 @@ class Player{
 }
 
 class Platform{
-    constructor(x,y, width, height){
+    constructor(x,y, width, height,image){
         this.position={
             x:x,
             y:y
         }
         this.width=width;
         this.height=height;
+        this.image=image;
 
     }
     draw(){
-        context.fillStyle="blue"
-        context.fillRect(this.position.x,this.position.y,this.width,this.height)
+        // context.fillStyle="blue"
+        // context.fillRect(this.position.x,this.position.y,this.width,this.height)
+        context.drawImage(this.image,this.position.x, this.position.y, this.image.width, this.image.height);
 
     }
 
@@ -79,17 +105,32 @@ player.draw();
 // const platform= new Platform(500,600, 30,100);
 // platform.draw();
 
-const platforms=[
-    new Platform(500,500, 150, 30),
-    new Platform( 300, 200, 100, 20),
-    new Platform( 1000, 600, 20, 100),
-    new Platform( 800, 400, 100, 30),
-    new Platform( 1200, 200, 100, 20),
-    new Platform( 900, 350, 100, 30),
-    new Platform( 1500, 650, 20, 80),
-    new Platform( 1800, 200, 100, 20),
-    new Platform( 2100, 1000, 100, 10),
-]
+// const platforms=[
+//     new Platform(500,500, 150, 30),
+//     new Platform( 300, 200, 100, 20),
+//     new Platform( 1000, 600, 20, 100),
+//     new Platform( 800, 400, 100, 30),
+//     new Platform( 1200, 200, 100, 20),
+//     new Platform( 900, 350, 100, 30),
+//     new Platform( 1500, 650, 20, 80),
+//     new Platform( 1800, 200, 100, 20),
+//     new Platform( 2100, 1000, 100, 10),
+// ]
+
+const platform= new Platform(0, innerHeight-platformImage.height, platformImage.width, 
+            platformImage.height,platformImage);//x, y, width, height, image
+
+const platform2= new Platform(platformImage.width*2, innerHeight-platformImage.height, platformImage.width, 
+            platformImage.height,platformImage);
+
+const platform3=new Platform(500,innerHeight-platformSmallTall.height,platformSmallTall.width, 
+    platformSmallTall.height,platformSmallTall)
+
+const platforms=[];
+platforms.push(platform);
+platforms.push(platform2);
+platforms.push(platform3);
+
 
 
 addEventListener("keydown",(e)=>{
@@ -116,13 +157,14 @@ addEventListener("keyup",(e)=>{
     }
 })
 
-
+const scrollBackground=new Background();
 
 function animate(){
 
     requestAnimationFrame(animate);
     context.clearRect(0,0,innerWidth,canvas.height);
-    
+    context.drawImage(background,0,0);// image, x, y
+    scrollBackground.update();
     // platform.draw();
     
     platforms.forEach(platfom=>{
@@ -141,10 +183,12 @@ function animate(){
 
         platforms.forEach(platform=>{
             if(key.right.pressed){
+                offset-=5;
                 scoreOffsetx+=5;
                 platform.position.x-=5;
             }
             else if(key.left.pressed){
+                offset+=5;
                 scoreOffsetx-=5;
                 platform.position.x+=5;
             }

@@ -1,4 +1,4 @@
-//Background scrolling && Image Platforms and Platform Scrolling
+//sprite creation 
 
 const canvas= document.getElementById("canvas");
 const context= canvas.getContext("2d");
@@ -24,6 +24,18 @@ platformImage.src="./images/platform.png";
 var platformSmalTall=new Image();
 platformSmalTall.src="./images/platformSmallTall.png";
 
+var spriteRunRight=new Image();
+spriteRunRight.src="./images/spriteRunRight.png"
+
+var spriteStandRight = new Image();
+spriteStandRight.src="./images/spriteStandRight.png"
+
+var spriteRunLeft=new Image();
+spriteRunLeft.src="./images/spriteRunLeft.png"
+
+var spriteStandLeft = new Image();
+spriteStandLeft.src="./images/spriteStandLeft.png"
+
 
 const key={
     right:{
@@ -47,7 +59,7 @@ class Background{
 }
 
 class Player{
-    constructor(x,y, w, h){
+    constructor(x,y, w, h, image){
         this.position={
             x:x,
             y:y
@@ -58,13 +70,48 @@ class Player{
         }
         this.width=w;
         this.height=h;
+        this.image=image
+        this.frame=0;
+
+        this.sprite={
+            stand:{
+                right: spriteStandRight,
+                left:spriteStandLeft,
+                cropWidth: 177,
+                width:66
+            },
+            run:{
+                right:spriteRunRight,
+                left:spriteRunLeft,
+                cropWidth: 341,
+                width:127.875
+            }
+        }
+        this.currentSprite=spriteStandRight;
+        this.currentWidth=177;
 
     }
     draw(){
-        context.fillStyle="red";
-        context.fillRect(this.position.x, this.position.y, this.width,this.height);
+        // context.fillStyle="red";
+        // context.fillRect(this.position.x, this.position.y, this.width,this.height);
+        context.drawImage(
+            this.currentSprite,
+            this.currentWidth*this.frame,     // x : starting point for croping image
+            0,      // y : starting point for croping image
+            this.currentWidth,    // crop image width
+            400,    // crop image height
+            this.position.x,this.position.y,this.width,this.height);
+
     }
     update(){
+        this.frame++;
+        if(this.frame>59 && (this.currentSprite==this.sprite.stand.right || 
+            this.currentSprite==this.sprite.stand.left)){
+            this.frame=0;
+        }else if(this.frame>29 && (this.currentSprite==this.sprite.run.right || 
+            this.currentSprite==this.sprite.run.left ) ){
+            this.frame=0;
+        }
         this.draw();
 
         this.position.x+=this.velocity.x;
@@ -94,31 +141,17 @@ class Platform{
     draw(){
         // context.fillStyle="blue"
         // context.fillRect(this.position.x,this.position.y,this.width,this.height)
-        context.drawImage(this.image,this.position.x,this.position.y,this.image.width,this.image.height);
+        context.drawImage(
+            this.image,this.position.x,this.position.y,this.image.width,this.image.height);
 
     }
 
 }
 
 
-const player=new Player(250,300,30,30);//rectangle type //x, y, w, h
+const player=new Player(250,300,66,150,spriteStandRight);//rectangle type //x, y, w, h
 player.draw();
 
-
-// const platform= new Platform(500,600, 30,100);
-// platform.draw();
-
-// const platforms=[
-//     new Platform(500,500, 150, 30),
-//     new Platform( 300, 200, 100, 20),
-//     new Platform( 1000, 600, 20, 100),
-//     new Platform( 800, 400, 100, 30),
-//     new Platform( 1200, 200, 100, 20),
-//     new Platform( 900, 350, 100, 30),
-//     new Platform( 1500, 650, 20, 80),
-//     new Platform( 1800, 200, 100, 20),
-//     new Platform( 2100, 1000, 100, 10),
-// ]
 const platform = new Platform(400, window.innerHeight - (platformSmalTall.height), platformSmalTall.width,
                      platformSmalTall.height,platformSmalTall);
 
@@ -137,10 +170,16 @@ platforms.push(platform2)
 addEventListener("keydown",(e)=>{
 
     if(e.key=="ArrowRight"){
+        player.currentSprite=player.sprite.run.right;
+        player.currentWidth=player.sprite.run.cropWidth;
+        player.width=player.sprite.run.width
         key.right.pressed=true
         console.log(" right arrow key press")
     }
     if(e.key=="ArrowLeft"){
+        player.currentSprite=player.sprite.run.left;
+        player.currentWidth=player.sprite.run.cropWidth;
+        player.width=player.sprite.run.width
         key.left.pressed=true;
         console.log("left Arrow key Press");
     }
@@ -148,10 +187,17 @@ addEventListener("keydown",(e)=>{
 
 addEventListener("keyup",(e)=>{
     if(e.key=="ArrowRight"){
+       
         key.right.pressed=false
+         player.currentSprite=player.sprite.stand.right;
+        player.currentWidth=player.sprite.stand.cropWidth;
+        player.width=player.sprite.stand.width
     }
     if(e.key=="ArrowLeft"){
         key.left.pressed=false
+        player.currentSprite=player.sprite.stand.left;
+        player.currentWidth=player.sprite.stand.cropWidth;
+        player.width=player.sprite.stand.width
     }
     if(e.key=="ArrowUp"){
         player.velocity.y=-10;
