@@ -1,0 +1,30 @@
+
+Form Handling
+     1. Controlled  : Where Form Data is Handled by React Component State
+     2. UnControlled : Where Form Data is Handled by DOM itself
+     3. React-Hook-Form : third party Library (hybrid: controlled and uncontrolled)
+
+Zod And Yup Schema Validations:
+
+Key Differences to Remember:
+
+Feature	                            Yup	                                    Zod
+Import	                    import * as yup from "yup"	            import * as z from "zod"
+Schema creation	             yup.object()	                            z.object()
+String validation	        yup.string().required()	                z.string() (required by default)
+Number validation	        yup.number().required()	                z.number() (required by default)
+Regex validation	        .matches(/[A-Z]/, "message")	          .regex(/[A-Z]/, "message")
+Type inference	            Manual interface needed	                   z.infer<typeof schema>
+Required fields	            Explicit .required()	                Implicit (all fields required by default)
+
+
+
+.matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+.matches(/[a-z]/, "Password must contain at least one lowercase letter")
+.matches(/[0-9]/, "Password must contain at least one digit")
+.matches(/[@$!%*?&#]/, "Password must contain at least one special character"), 
+
+
+.matches(/^\d+$/, "Phone number must contain only digits")
+
+

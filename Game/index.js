@@ -20,6 +20,19 @@ platformImage.src="./images/platform.png";
 const platformSmallTall=new Image();
 platformSmallTall.src="./images/platformSmallTall.png"
 
+const spriteRunLeft=new Image();
+spriteRunLeft.src="./images/spriteRunLeft.png"
+
+const spriteRunRight=new Image();
+spriteRunRight.src="./images/spriteRunRight.png"
+
+const spriteStandLeft=new Image();
+spriteStandLeft.src="./images/spriteStandLeft.png"
+
+const spriteStandRight=new Image();
+spriteStandRight.src="./images/spriteStandRight.png"
+
+
 const key={
     right:{
         pressed:false
@@ -54,14 +67,50 @@ class Player{
         }
         this.width=w;
         this.height=h;
+        this.frame=0;
+
+        this.sprite={
+            stand:{
+                right:spriteStandRight,
+                left:spriteStandLeft,
+                cropWidth:177,
+                width:66
+            },
+            run:{
+                right:spriteRunRight,
+                left:spriteRunLeft,
+                cropWidth:341,
+                width:127
+            }
+        }
+
+        this.currentSprite=spriteStandRight;
+        this.currentWidth=177
+        
 
     }
     draw(){
-        context.fillStyle="red";
-        context.fillRect(this.position.x, this.position.y, this.width,this.height);
+        // context.fillStyle="red";
+        // context.fillRect(this.position.x, this.position.y, this.width,this.height);
+        context.drawImage(
+            this.currentSprite,
+            this.currentWidth*this.frame,
+            0,
+            this.currentWidth,
+            400,
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height
+        )
     }
     update(){
         this.draw();
+        this.frame++;
+        if(this.frame>59 &&( this.currentSprite==this.sprite.stand.right || this.currentSprite==this.sprite.stand.left))
+            this.frame=0;
+        else if(this.frame>29 && (this.currentSprite==this.sprite.run.right || this.currentSprite==this.sprite.run.left))
+            this.frame=0;
 
         this.position.x+=this.velocity.x;
         this.position.y+=this.velocity.y
@@ -98,8 +147,7 @@ class Platform{
 }
 
 
-const player=new Player(250,300,30,30);//rectangle type //x, y, w, h
-player.draw();
+
 
 
 // const platform= new Platform(500,600, 30,100);
@@ -131,16 +179,25 @@ platforms.push(platform);
 platforms.push(platform2);
 platforms.push(platform3);
 
+ platforms.forEach(platfom=>{
+        platfom.draw();
+    })
 
 
 addEventListener("keydown",(e)=>{
 
     if(e.key=="ArrowRight"){
         key.right.pressed=true
+        player.currentSprite=player.sprite.run.right;
+        player.currentWidth=player.sprite.run.cropWidth;
+        player.width=player.sprite.run.width;
         console.log(" right arrow key press")
     }
     if(e.key=="ArrowLeft"){
         key.left.pressed=true;
+        player.currentSprite=player.sprite.run.left
+        player.currentWidth=player.sprite.run.cropWidth;
+        player.width=player.sprite.run.width;
         console.log("left Arrow key Press");
     }
 })
@@ -148,14 +205,23 @@ addEventListener("keydown",(e)=>{
 addEventListener("keyup",(e)=>{
     if(e.key=="ArrowRight"){
         key.right.pressed=false
+        player.currentSprite=player.sprite.stand.right;
+        player.currentWidth=player.sprite.stand.cropWidth;
+        player.width=player.sprite.stand.width;
     }
     if(e.key=="ArrowLeft"){
         key.left.pressed=false
+         player.currentSprite=player.sprite.stand.left;
+        player.currentWidth=player.sprite.stand.cropWidth;
+        player.width=player.sprite.stand.width;
     }
     if(e.key=="ArrowUp"){
         player.velocity.y=-10;
     }
 })
+
+const player=new Player(250,300,66,150);//rectangle type //x, y, w, h
+player.draw();
 
 const scrollBackground=new Background();
 

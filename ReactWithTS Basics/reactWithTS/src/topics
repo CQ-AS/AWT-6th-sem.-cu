@@ -1,0 +1,11 @@
+
+1. Basic Functional Component, Props Simple with string and number type, 
+    Advance Pros   (object, array of object), Children
+
+2. Evenet Handling in React With TS : Event Handling within component, 
+    handled by parent, additional parameter to event: Event handling with diffrent input elements like:input field, selector, textarea, radio ,button, Form
+
+3. UseState and useReducer
+
+
+

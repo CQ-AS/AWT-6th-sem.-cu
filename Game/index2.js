@@ -1,4 +1,4 @@
-//sprite creation 
+//sprite creation
 
 const canvas= document.getElementById("canvas");
 const context= canvas.getContext("2d");
@@ -100,7 +100,8 @@ class Player{
             0,      // y : starting point for croping image
             this.currentWidth,    // crop image width
             400,    // crop image height
-            this.position.x,this.position.y,this.width,this.height);
+            this.position.x,this.position.y,
+            this.width,this.height);
 
     }
     update(){
@@ -189,7 +190,7 @@ addEventListener("keyup",(e)=>{
     if(e.key=="ArrowRight"){
        
         key.right.pressed=false
-         player.currentSprite=player.sprite.stand.right;
+        player.currentSprite=player.sprite.stand.right;
         player.currentWidth=player.sprite.stand.cropWidth;
         player.width=player.sprite.stand.width
     }
