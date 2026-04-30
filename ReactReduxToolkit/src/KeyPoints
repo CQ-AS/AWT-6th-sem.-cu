@@ -1,0 +1,88 @@
+
+REACT REDUX TOOLKIT
+
+Terms--> Action, Reducer,Slice,Store
+
+
+1.  Action: Like an object that describes what happened :object which have an event and information 
+    Action → { type: "event", payload: information }
+    type → event name EX : Count : inc, dec
+    payload → data related to event 
+
+2. Reducer: A function that decides how state changes based on an action.
+  (state, action) => newState
+  takes current state
+  takes action , action " inc" count=+payload , "dec" count-=payload
+  returns updated state
+
+3. Slice: A combination of state + reducers + actions in one place.
+    Contains:                           counter : counterSlice , products: 
+        initial state
+        reducer functions
+        auto-generated actions
+
+  Purpose:To manage one part of the global state
+
+4. Store: The store is the central place where all application state is stored.
+  Store = global container of all state
+  To holds the complete state of the app
+  To connects all slices
+  To allows dispatching actions
+  To notifies UI when state changes
+
+
+One-Line Summary: 
+  Action → what happened
+  Reducer → how state changes
+  Slice → state + logic
+  Store → where everything lives
+
+
+Working: onClick--> handleClick(event)---> Action Dispatch ---> store have Reducer and data(state) information --->Reducer Executes Logic --->State Update in Store --->UI Update  
+        user interaction --> your function runs --> sends event to Redux --> decides how to update state --> new state is saved --> React updates automatically
+
+
+Step 1: Create React App by using Vite 
+
+Step 2: Install Redux Toolkit and React-Redux : npm install @reduxjs/toolkit react-redux
+
+Step 3: Create a Redux Store 
+        Src->create folder Redux ->in Redux Folder Create a file store.ts 
+        will use configureStore API from Redux Toolkit.
+
+Step 4: Provide the Redux Store to React
+        in main.tsx->bind App in  <Provider store={store}><App/><Provider/>
+        Provider from React-redux , store form .src/redux/store.ts
+
+Step 5: Create a Redux State Slice
+        Add a new file named src/features/counter/counterSlice.js. 
+        , import the createSlice API from Redux Toolkit.
+
+Step 6: Add Slice Reducers to the Store
+
+Step 7: Use Redux State and Actions in React Components
+      We can read data from the store with useSelector, 
+      and dispatch actions using useDispatch.
+
+
+
+
+Async Thunk: In Redux Toolkit createAsyncThunk is used to handle async operations (like API calls)
+
+Real apps need:
+            API calls
+            delays
+            server requests
+    That’s where async thunk comes in.
+
+An async thunk automatically creates 3 states:
+        pending   → loading
+        fulfilled → success
+        rejected  → error
+
+
+
+
+For type safty in stor.ts use :
+// export type RootState =ReturnType<typeof store.getState>
+// export type AppDispatch=typeof store.dispatch
