@@ -82,7 +82,10 @@ An async thunk automatically creates 3 states:
 
 
 
-
-For type safty in stor.ts use :
+For type safty in store.ts use :
 // export type RootState =ReturnType<typeof store.getState>
 // export type AppDispatch=typeof store.dispatch
+
+
+
+Task : Todo Task : Add Todo , remove Todo by using redux Toolkit 
