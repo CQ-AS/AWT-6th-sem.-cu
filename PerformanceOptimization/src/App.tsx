@@ -8,7 +8,7 @@ import { UserProfiles } from './components/UsersProfiles'
 // import { Child } from './components/Child'
 // import { UseMemo } from './components/UseMemo'
 // import { UseCallBack } from './components/UseCallBack'
-import { Fetch } from './components/Fetch'
+// import { Fetch } from './components/Fetch'
 const LazyComponent= lazy(()=>import ("./components/LazyLoading"))
 
 
@@ -19,7 +19,7 @@ function App() {
     <>
     {/* <Fetch/> */}
     <UserProfiles/>
-{/* <Suspense fallback={<h1>Loading....</h1>}><LazyComponent/></Suspense> */}
+<Suspense fallback={<h1>Loading....</h1>}><LazyComponent/></Suspense>
     {/* <p>Count:{count}</p>
     <button onClick={()=>{setCount(count+1)}}>Increment</button> */}
 

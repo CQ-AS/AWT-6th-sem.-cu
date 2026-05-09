@@ -1,0 +1,71 @@
+Project Structure
+
+    Project
+        |-Server
+        |
+        |-Client
+
+-------------------------------------------------
+
+Backend Setup:
+
+1. create folder Server 
+        cd server
+
+2. initialize Node Project
+        npm init 
+
+3. Install Express
+    npm install Express
+
+4. Install TypeScript Devlopment Packages
+    npm install -D typescript ts-node-dev @types/node @types/express
+
+5. Create TypeScript Config
+    npx tsc --init
+
+6. Create Source Folder : crete index.ts inside src
+
+7. Add Start Script : open package.json
+    Replace  : "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    } 
+
+    Replace with: "scripts": {
+    "dev": "ts-node-dev src/index.ts"
+    }
+
+8. open tsConfig.json : update config.
+    target: "ES2020",
+    module:"CommonJS",
+    "verbatimModuleSyntax": false,
+
+9. Start Server : npm run dev
+
+10. install Socket and cors
+        npm install socket.io cors
+
+--------------------------------------------
+
+Frontend Setup: 
+
+1. Create React app 
+    npm create vite@latest client 
+    select react and typeScript
+
+2. Install Socket.IO Client 
+    cd client
+    npm install socket.io-client
+
+3. Create Socket Instance
+    client/src/socket.ts
+
+    import { io } from "socket.io-client";
+    export const socket = io("http://localhost:5000");
+
+4. Connection + Disconnect + User Count
+client/src/App.tsx
+
+5. One to One chat
+
+6. room Chat
