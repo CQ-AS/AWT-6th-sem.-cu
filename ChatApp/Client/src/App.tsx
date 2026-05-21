@@ -71,7 +71,7 @@ export default function App(){
 
         <button onClick={handleMessgSend}>Send</button>
 
-      <h1>Private Chat</h1>
+      <h1>Group Chat</h1>
         <input type="text" value={groupName} placeholder="Enter Room Name" onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setGroupName(e.target.value )}}/>  
           <button onClick={JoinRoom}>Join Group</button>
         <input type="text" value={groupMessg} placeholder="Enter messgage to send in Group" onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setGroupMessg(e.target.value )}}/> 
