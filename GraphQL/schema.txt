@@ -1,0 +1,32 @@
+query getUsers{users {id,Name}}
+
+query getAllUsers{
+  
+  users{
+    name, queries{id,title}
+  }
+}
+
+query getUserByID($id:ID!){
+  	userByID(id:$id){
+    name,id
+  }
+}
+
+mutation addUserData(
+  $id: ID!,
+  $name: String!,
+  $email: String!
+) {
+
+  addUser(
+    id: $id,
+    name: $name,
+    email: $email
+  ) {
+
+    id
+    name
+    email
+  }
+}
